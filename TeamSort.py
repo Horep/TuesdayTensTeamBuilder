@@ -46,13 +46,13 @@ def GenTeams(P):
     d=10000 #dummy variable, needs to be large
     P=sorted(list(P),reverse=True,key=getKey)#Sorts P
     #Generates list of all permutations of player list.
-    Y=list(itertools.permutations(P))
+    Y=list(itertools.combinations(P,5))
     
     #Iterates through all permutations to find smallest difference in metric
     #d is the smallest difference found at ith iteration
-    for i in range(0,3628800):
-        A=Y[i][0:5]
-        B=Y[i][5:10]
+    for i in range(0,126):
+        A=Y[i]
+        B=Y[-i-1]
         if abs(TeamValue(A)-TeamValue(B))<d:
             d=abs(TeamValue(A)-TeamValue(B))
             A_dum=A
@@ -92,4 +92,3 @@ def GenTeams(P):
         print("Avg value of sNap B=",Val_Bs)
         print("Avg sNap value difference=",abs(Val_As-Val_Bs))
         print("sNap Fairness Metric=",str(round(Fairness(Val_As,Val_Bs)))+"%")
-    
