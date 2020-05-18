@@ -8,7 +8,7 @@ from TeamSort import Fairness,getKey,TeamValue
 #Iterates through all permutations to find smallest difference in metric
 #d is the smallest difference found at ith iteration
 
-def GenTeams(P):
+def GenTeamsFairness(P):
     d=10000 #dummy variable, needs to be large
     P=sorted(list(P),reverse=True,key=getKey)#Sorts P
     #Generates list of all permutations of player list.
@@ -38,8 +38,9 @@ def GenTeams(P):
 iterations=100
 t=[]
 for i in range(0,iterations):
-    t.append(GenTeams(RandomTeam()))
+    t.append(GenTeamsFairness(RandomTeam()))
     
 t=np.array(t)
 
 MySum=t.sum(axis=0)/iterations
+print(MySum)
