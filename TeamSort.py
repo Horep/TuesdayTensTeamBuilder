@@ -1,6 +1,6 @@
 import itertools
 from CSGORankListProducer import RandomTeam
-
+#change to 1 to produce comparison to sNap bot's method
 ValCompare=1
 
 RankList={"S1":800,
