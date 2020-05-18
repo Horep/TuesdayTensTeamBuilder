@@ -1,9 +1,9 @@
 import itertools
 from CSGORankListProducer import RandomTeam
 #change to 1 for a detailed readout of values
-ValReadOut=0
+ValReadOut=1
 #change to 1 to produce comparison to sNap bot's method
-ValCompare=0
+ValCompare=1
 
 RankList={"S1":800,
           "S2":800,
@@ -65,8 +65,6 @@ def GenTeams(P):
 
     A_dum=sorted(list(A_dum),reverse=True,key=getKey)
     B_dum=sorted(list(B_dum),reverse=True,key=getKey)
-
-    return A_dum,B_dum
     
     if ValReadOut==1:
         print("Players=",P)
@@ -92,3 +90,7 @@ def GenTeams(P):
         print("Avg value of sNap B=",Val_Bs)
         print("Avg sNap value difference=",abs(Val_As-Val_Bs))
         print("sNap Fairness Metric=",str(round(Fairness(Val_As,Val_Bs)))+"%")
+
+    return A_dum,B_dum
+    
+    
