@@ -8,7 +8,7 @@ from CSGORankListProducer import RandomTeam
 from TeamSort import Fairness, getKey, TeamValue
 
 start = timer()
-shitlist=[]
+shitlist = []
 
 
 def GenTeamsFairness(P):
@@ -54,7 +54,7 @@ def GenTeamsFairness(P):
 
     Val_As = TeamValue(sNap_a) / 5
     Val_Bs = TeamValue(sNap_b) / 5
-    
+
     TaF_A = [P[0], P[2], P[5], P[6], P[9]]
     TaF_B = [P[1], P[3], P[4], P[7], P[8]]
     Val_At = TeamValue(TaF_A) / 5
@@ -92,16 +92,36 @@ for i in names:
     print("Average Fairness  =", MySum[names.index(i)], "%")
     print("Standard Deviation=", MyStDev[names.index(i)], "%")
     print()
-    
+
 
 labels = ("hOREP", "sNap", "TaF", "Ville")
-size=3
+size = 3
 fig, ax = plt.subplots()
-ax.boxplot(t)
+ax.boxplot(t, notch=False, sym=".")
 plt.title(label=str(iterations)+" iterations")
 plt.ylabel("Fairness %")
-plt.xticks(np.arange(len(labels))+1,labels)
-plt.savefig("TeamSortData",dpi=1500)
+plt.xticks(np.arange(len(labels))+1, labels)
+plt.ylim(0, 100)
+plt.savefig("TeamSortData.png", dpi=1500)
+plt.show()
+
+fig, axs = plt.subplots(4, sharex=True, figsize=(10, 10))
+binNum = 50
+axs[0].set_xlim([0, 100])
+axs[0].hist(t[:, 0], bins=binNum, color="blue", density=True,
+            edgecolor='black', linewidth=1.2)
+axs[0].set_title("hOREP")
+axs[1].hist(t[:, 1], bins=binNum, color="orange", density=True,
+            edgecolor='black', linewidth=1.2)
+axs[1].set_title("sNap")
+axs[2].hist(t[:, 2], bins=binNum, color="purple", density=True,
+            edgecolor='black', linewidth=1.2)
+axs[2].set_title("TaF")
+axs[3].hist(t[:, 3], bins=binNum, color="green", density=True,
+            edgecolor='black', linewidth=1.2)
+axs[3].set_title("Ville")
+axs[3].set_xlabel("Fairness %")
+plt.savefig("TeamSortData2.png", dpi=500)
 plt.show()
 end = timer()
 print("Time taken=", round(end - start, 2), "seconds.")
