@@ -1,10 +1,10 @@
 import itertools
 import numpy as np
-
+from timeit import default_timer as timer
 from CSGORankListProducer import RandomTeam
 from TeamSort import Fairness, getKey, TeamValue
 
-
+start = timer()
 # Iterates through all permutations to find smallest difference in metric
 # d is the smallest difference found at ith iteration
 
@@ -50,12 +50,23 @@ def GenTeamsFairness(P):
     return MyFairness, sNapFairness, TaF_Fairness, Ville_Fairness
 
 
-iterations = 500000
+iterations = 10**7
 t = []
 for i in range(0, iterations):
     t.append(GenTeamsFairness(RandomTeam()))
 
 t = np.array(t)
+MySum = np.round(t.sum(axis=0)/iterations, 2)
+MyStDev = np.round(t.std(axis=0), 2)
+MyMin = np.round(t.min(axis=0), 2)
+MyMax = np.round(t.max(axis=0), 2)
+names = ["hOREP", "sNap", "TaF", "Ville"]
+print("Over", iterations, "Random teams:")
+for i in names:
+    print(i+str("'s"), "Method-")
+    print("Average Fairness  =", MySum[names.index(i)], "%")
+    print("Standard Deviation=", MyStDev[names.index(i)], "%")
+    print()
 
-MySum = t.sum(axis=0)/iterations
-print(MySum)
+end = timer()
+print("Time taken=",round(end - start,2),"seconds.")
