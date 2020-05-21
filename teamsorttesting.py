@@ -8,6 +8,7 @@ from CSGORankListProducer import RandomTeam
 from TeamSort import Fairness, getKey, TeamValue
 
 start = timer()
+shitlist=[]
 
 
 def GenTeamsFairness(P):
@@ -29,7 +30,6 @@ def GenTeamsFairness(P):
     B_Val = TeamValue(B_dum) / 5
     A_dum = sorted(list(A_dum), reverse=True, key=getKey)
     B_dum = sorted(list(B_dum), reverse=True, key=getKey)
-
     sNap_a = []
     sNap_b = []
     players = [P[0], P[1], P[2], P[3], P[4], P[5], P[6], P[7], P[8], P[9]]
@@ -69,6 +69,8 @@ def GenTeamsFairness(P):
     sNapFairness = Fairness(Val_As, Val_Bs)
     TaF_Fairness = Fairness(Val_At, Val_Bt)
     Ville_Fairness = Fairness(Val_Av, Val_Bv)
+    if MyFairness < 70:
+        shitlist.append(P)
 
     return MyFairness, sNapFairness, TaF_Fairness, Ville_Fairness
 

@@ -10,17 +10,17 @@ ValCompare = 1
 
 RankList = {
     "S1": 800,
-    "S2": 800,
-    "S3": 800,
-    "S4": 800,
+    "S2": 825,
+    "S3": 850,
+    "S4": 875,
     "SE": 950,
-    "SEM": 950,
+    "SEM": 965,
     "GN1": 1050,
     "GN2": 1100,
     "GN3": 1150,
     "GNM": 1200,
     "MG1": 1250,
-    "MG2": 1250,
+    "MG2": 1275,
     "MGE": 1400,
     "DMG": 1550,
     "LE": 1700,
@@ -50,10 +50,10 @@ def GenTeams(P):
     d = 10000  # Dummy variable, needs to be large
     P = sorted(list(P), reverse=True, key=getKey)  # Sorts P
 
-    # Generates list of all permutations of player list.
+    # Generates list of all combinations of player list.
     Y = list(itertools.combinations(P, 5))
 
-    # Iterates through all permutations to find smallest difference in metric
+    # Iterates through all combinations to find smallest difference in metric
     # d is the smallest difference found at ith iteration
     for i in range(0, 126):
         A = Y[i]
