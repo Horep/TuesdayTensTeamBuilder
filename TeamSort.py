@@ -1,12 +1,12 @@
 import itertools
-
+from random import randint
 from CSGORankListProducer import RandomTeam
 
 
 # Change to 1 for a detailed readout of values
-ValReadOut = 0
+ValReadOut = 1
 # Change to 1 to produce comparison to sNap bot's method
-ValCompare = 0
+ValCompare = 1
 
 RankList = {
     "S1": 800,
@@ -47,7 +47,7 @@ def TeamValue(x):  # Calculates value of team
 
 
 def GenTeams(P):
-    d = 10000  # dummy variable, needs to be large
+    d = 10000  # Dummy variable, needs to be large
     P = sorted(list(P), reverse=True, key=getKey)  # Sorts P
 
     # Generates list of all permutations of player list.
@@ -82,13 +82,32 @@ def GenTeams(P):
         print("Fairness Metric=", str(round(Fairness(A_Val, B_Val))) + "%")
 
     if ValCompare == 1:
-        sNap_A = [P[1], P[3], P[5], P[7], P[9]]
-        sNap_B = [P[0], P[2], P[4], P[6], P[8]]
+        sNap_a = []
+        sNap_b = []
+        players = P
+        # AB
+        sNap_a.append(players.pop(0))
+        sNap_b.append(players.pop(0))
+
+        for i in range(4):
+            if getKey(sNap_a[0]) > getKey(sNap_b[0]):
+                # BA
+                sNap_b.append(players.pop(0))
+                sNap_a.append(players.pop(0))
+            else:
+                if randint(0, 1):
+                    # AB
+                    sNap_a.append(players.pop(0))
+                    sNap_b.append(players.pop(0))
+                else:
+                    # BA
+                    sNap_b.append(players.pop(0))
+                    sNap_a.append(players.pop(0))
         print()
-        print("sNap Bot Team A=", sNap_A)
-        print("sNap Bot Team B=", sNap_B)
-        Val_As = TeamValue(sNap_A) / 5
-        Val_Bs = TeamValue(sNap_B) / 5
+        print("sNap Bot Team A=", sNap_a)
+        print("sNap Bot Team B=", sNap_b)
+        Val_As = TeamValue(sNap_a) / 5
+        Val_Bs = TeamValue(sNap_b) / 5
         print("Avg value of sNap A=", Val_As)
         print("Avg value of sNap B=", Val_Bs)
         print("Avg sNap value difference=", abs(Val_As - Val_Bs))

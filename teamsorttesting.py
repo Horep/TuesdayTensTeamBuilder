@@ -1,5 +1,6 @@
 import itertools
 import numpy as np
+from random import randint
 from timeit import default_timer as timer
 from CSGORankListProducer import RandomTeam
 from TeamSort import Fairness, getKey, TeamValue
@@ -27,11 +28,31 @@ def GenTeamsFairness(P):
     A_dum = sorted(list(A_dum), reverse=True, key=getKey)
     B_dum = sorted(list(B_dum), reverse=True, key=getKey)
 
-    sNap_A = [P[1], P[3], P[5], P[7], P[9]]
-    sNap_B = [P[0], P[2], P[4], P[6], P[8]]
-    Val_As = TeamValue(sNap_A) / 5
-    Val_Bs = TeamValue(sNap_B) / 5
+    sNap_a = []
+    sNap_b = []
+    players = [P[0], P[1], P[2], P[3], P[4], P[5], P[6], P[7], P[8], P[9]]
+    # AB
+    sNap_a.append(players.pop(0))
+    sNap_b.append(players.pop(0))
 
+    for i in range(4):
+        if getKey(sNap_a[0]) > getKey(sNap_b[0]):
+            # BA
+            sNap_b.append(players.pop(0))
+            sNap_a.append(players.pop(0))
+        else:
+            if randint(0, 1):
+                # AB
+                sNap_a.append(players.pop(0))
+                sNap_b.append(players.pop(0))
+            else:
+                # BA
+                sNap_b.append(players.pop(0))
+                sNap_a.append(players.pop(0))
+
+    Val_As = TeamValue(sNap_a) / 5
+    Val_Bs = TeamValue(sNap_b) / 5
+    
     TaF_A = [P[0], P[2], P[5], P[6], P[9]]
     TaF_B = [P[1], P[3], P[4], P[7], P[8]]
     Val_At = TeamValue(TaF_A) / 5
@@ -50,7 +71,7 @@ def GenTeamsFairness(P):
     return MyFairness, sNapFairness, TaF_Fairness, Ville_Fairness
 
 
-iterations = 10**7
+iterations = 1000
 t = []
 for i in range(0, iterations):
     t.append(GenTeamsFairness(RandomTeam()))
