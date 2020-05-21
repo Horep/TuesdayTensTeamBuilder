@@ -1,5 +1,7 @@
 import itertools
 import numpy as np
+import matplotlib.pyplot as plt
+
 from random import randint
 from timeit import default_timer as timer
 from CSGORankListProducer import RandomTeam
@@ -71,7 +73,7 @@ def GenTeamsFairness(P):
     return MyFairness, sNapFairness, TaF_Fairness, Ville_Fairness
 
 
-iterations = 1000
+iterations = 10**6
 t = []
 for i in range(0, iterations):
     t.append(GenTeamsFairness(RandomTeam()))
@@ -84,10 +86,20 @@ MyMax = np.round(t.max(axis=0), 2)
 names = ["hOREP", "sNap", "TaF", "Ville"]
 print("Over", iterations, "Random teams:")
 for i in names:
-    print(i+str("'s"), "Method-")
+    print(i+str("s"), "Method-")
     print("Average Fairness  =", MySum[names.index(i)], "%")
     print("Standard Deviation=", MyStDev[names.index(i)], "%")
     print()
+    
 
+labels = ("hOREP", "sNap", "TaF", "Ville")
+size=3
+fig, ax = plt.subplots()
+ax.boxplot(t)
+plt.title(label=str(iterations)+" iterations")
+plt.ylabel("Fairness %")
+plt.xticks(np.arange(len(labels))+1,labels)
+plt.savefig("TeamSortData",dpi=1500)
+plt.show()
 end = timer()
 print("Time taken=", round(end - start, 2), "seconds.")
