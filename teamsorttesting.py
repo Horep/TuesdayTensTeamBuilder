@@ -5,15 +5,15 @@ from CSGORankListProducer import RandomTeam
 from TeamSort import Fairness, getKey, TeamValue
 
 start = timer()
-# Iterates through all permutations to find smallest difference in metric
-# d is the smallest difference found at ith iteration
+
 
 def GenTeamsFairness(P):
     d = 10000  # Dummy variable, needs to be large
     P = sorted(list(P), reverse=True, key=getKey)  # Sorts P
-    # Generates list of all permutations of player list.
+    # Generates list of all combinations of player list.
     Y = list(itertools.combinations(P, 5))
 
+    # Iterates through all combinations to find smallest difference in metric
     for i in range(0, 126):
         A = Y[i]
         B = Y[-i-1]
@@ -69,4 +69,4 @@ for i in names:
     print()
 
 end = timer()
-print("Time taken=",round(end - start,2),"seconds.")
+print("Time taken=", round(end - start, 2), "seconds.")
