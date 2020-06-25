@@ -1,5 +1,6 @@
 from random import randint
 
+
 RankNumList = {
     0: "S1",
     1: "S2",
