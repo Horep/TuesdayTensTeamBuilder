@@ -75,7 +75,7 @@ def GenTeamsFairness(P):
     return MyFairness, sNapFairness, TaF_Fairness, Ville_Fairness
 
 
-iterations = 10**6
+iterations = 10**7
 t = []
 for i in range(0, iterations):
     t.append(GenTeamsFairness(RandomTeam()))
